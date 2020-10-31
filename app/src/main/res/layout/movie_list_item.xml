@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/poster_movie_list_item"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp">
+
+    </ImageView>
+
+    <ImageButton
+        android:id="@+id/bookmark_movie_list_item"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
+        android:tint="@android:color/darker_gray"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="-12dp"
+        app:srcCompat="@drawable/ic_bookmark_border_black_24dp">
+
+    </ImageButton>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/poster_movie_list_item"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
+
+        <TextView
+            android:id="@+id/title_movie_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/default_title_movie" />
+
+        <TextView
+            android:id="@+id/date_movie_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:text="@string/default_year_movie" />
+
+        <TextView
+            android:id="@+id/rating_movie_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:text="@string/default_rating_movie" />
+
+    </LinearLayout>
+
+</RelativeLayout>
