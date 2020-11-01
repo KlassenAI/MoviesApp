@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment {
                         Movie movie = new Movie();
                         movie.setId(id);
                         movie.setTitle(title);
-                        movie.setImage(image);
+                        movie.setPoster(image);
                         movie.setDate(date);
                         movie.setRating(rating);
 
@@ -173,7 +173,7 @@ public class HomeFragment extends Fragment {
                         Movie movie = new Movie();
                         movie.setId(id);
                         movie.setTitle(title);
-                        movie.setImage(image);
+                        movie.setPoster(image);
                         movie.setDate(date);
                         movie.setRating(rating);
 
@@ -219,7 +219,7 @@ public class HomeFragment extends Fragment {
                         Movie movie = new Movie();
                         movie.setId(id);
                         movie.setTitle(title);
-                        movie.setImage(image);
+                        movie.setPoster(image);
                         movie.setDate(date);
                         movie.setRating(rating);
 

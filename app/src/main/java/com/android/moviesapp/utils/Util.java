@@ -11,6 +11,8 @@ public final class Util {
     public static final String JSON_OBJECT_MOVIE_POSTER = "poster_path";
     public static final String JSON_OBJECT_MOVIE_DATE = "release_date";
     public static final String JSON_OBJECT_MOVIE_RATING = "vote_average";
+    public static final String JSON_OBJECT_MOVIE_VOTES = "vote_count";
+    public static final String JSON_OBJECT_MOVIE_POPULARITY = "popularity";
 
     public static final String REQUEST_MOVIE_SEARCH =
             "https://api.themoviedb.org/3/search/movie?api_key=" + Util.API_KEY + "&query=";

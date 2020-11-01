@@ -54,7 +54,7 @@ public class MovieCardItemAdapter extends RecyclerView.Adapter<MovieCardItemAdap
         final Movie currentMovie = mMovies.get(position);
 
         String title = currentMovie.getTitle();
-        String posterUrl = currentMovie.getImage();
+        String posterUrl = currentMovie.getPoster();
         String rating = currentMovie.getRating();
 
         Picasso.get().load("https://image.tmdb.org/t/p/original" + posterUrl).fit().centerInside().into(holder.mPosterImageView);

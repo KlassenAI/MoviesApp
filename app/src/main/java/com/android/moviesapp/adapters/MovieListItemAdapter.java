@@ -74,7 +74,7 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
 
         String id = currentMovie.getId();
         final String title = currentMovie.getTitle();
-        String posterUrl = currentMovie.getImage();
+        String posterUrl = currentMovie.getPoster();
         String date = currentMovie.getDate();
         String rating = currentMovie.getRating();
         final boolean favorite = currentMovie.isFavorite();

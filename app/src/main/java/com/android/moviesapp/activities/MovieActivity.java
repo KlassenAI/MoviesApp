@@ -34,7 +34,7 @@ public class MovieActivity extends AppCompatActivity {
         if (intent != null) {
             ItemMovie movie = intent.getParcelableExtra(ItemMovie.class.getSimpleName());
             setTitle(movie.getTitle());
-            Picasso.get().load(Util.REQUEST_IMAGE + movie.getImage()).fit().centerInside().into(mImageView);
+            Picasso.get().load(Util.REQUEST_IMAGE + movie.getPoster()).fit().centerInside().into(mImageView);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

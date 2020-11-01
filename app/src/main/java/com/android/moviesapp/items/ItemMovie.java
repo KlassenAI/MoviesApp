@@ -4,30 +4,53 @@ import android.os.Parcel;
 
 import com.android.moviesapp.entity.Movie;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class ItemMovie extends Movie {
 
     private String id;
     private String title;
-    private String image;
+    private String poster;
     private String date;
     private String rating;
+    private boolean adult;
+    private String[] genres_ids;
+    private String overview;
+    private String votes;
+    private String popularity;
     private boolean favorite;
 
-    public ItemMovie(String id, String title, String image, String date, String rating, boolean favorite) {
-        super(id, title, image, date, rating);
+    public ItemMovie(String id, String title, String poster, String date, String rating, boolean adult, String[] genres_ids, String overview, String votes, String popularity, boolean favorite) {
+        super(id, title, poster, date, rating, adult, genres_ids, overview, votes, popularity);
         this.favorite = favorite;
     }
 
-    public ItemMovie(Movie movie, boolean favorite) {
-        this.id = movie.getId();
-        this.title = movie.getTitle();
-        this.image = movie.getImage();
-        this.date = movie.getDate();
-        this.rating = movie.getRating();
-        this.favorite = favorite;
+    private ItemMovie(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        poster = in.readString();
+        date = in.readString();
+        rating = in.readString();
+        adult = in.readByte() != 0;
+        genres_ids = in.createStringArray();
+        overview = in.readString();
+        votes = in.readString();
+        popularity = in.readString();
+        favorite = in.readByte() != 0;
     }
+
+    public static final Creator<ItemMovie> CREATOR = new Creator<ItemMovie>() {
+        @Override
+        public ItemMovie createFromParcel(Parcel in) {
+            return new ItemMovie(in);
+        }
+
+        @Override
+        public ItemMovie[] newArray(int size) {
+            return new ItemMovie[size];
+        }
+    };
 
     public boolean isFavorite() {
         return favorite;
@@ -38,15 +61,22 @@ public class ItemMovie extends Movie {
     }
 
     @Override
-    public int describeContents() { return 0; }
+    public int describeContents() {
+        return 0;
+    }
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(id);
         parcel.writeString(title);
-        parcel.writeString(image);
+        parcel.writeString(poster);
         parcel.writeString(date);
         parcel.writeString(rating);
+        parcel.writeByte((byte) (adult ? 1 : 0));
+        parcel.writeStringArray(genres_ids);
+        parcel.writeString(overview);
+        parcel.writeString(votes);
+        parcel.writeString(popularity);
         parcel.writeByte((byte) (favorite ? 1 : 0));
     }
 
@@ -55,39 +85,25 @@ public class ItemMovie extends Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        ItemMovie itemMovie = (ItemMovie) o;
-        return favorite == itemMovie.favorite &&
-                Objects.equals(id, itemMovie.id) &&
-                Objects.equals(title, itemMovie.title) &&
-                Objects.equals(image, itemMovie.image) &&
-                Objects.equals(date, itemMovie.date) &&
-                Objects.equals(rating, itemMovie.rating);
+        ItemMovie movie = (ItemMovie) o;
+        return adult == movie.adult &&
+                favorite == movie.favorite &&
+                id.equals(movie.id) &&
+                Objects.equals(title, movie.title) &&
+                Objects.equals(poster, movie.poster) &&
+                Objects.equals(date, movie.date) &&
+                Objects.equals(rating, movie.rating) &&
+                Arrays.equals(genres_ids, movie.genres_ids) &&
+                Objects.equals(overview, movie.overview) &&
+                Objects.equals(votes, movie.votes) &&
+                Objects.equals(popularity, movie.popularity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, image, date, rating, favorite);
+        int result = Objects.hash(super.hashCode(), id, title, poster, date, rating, adult, overview, votes, popularity, favorite);
+        result = 31 * result + Arrays.hashCode(genres_ids);
+        return result;
     }
-
-    public ItemMovie(Parcel in) {
-        id = in.readString();
-        title = in.readString();
-        image = in.readString();
-        date = in.readString();
-        rating = in.readString();
-        favorite = in.readByte() != 0;
-    }
-
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new ItemMovie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new ItemMovie[size];
-        }
-    };
 }
 
