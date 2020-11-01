@@ -22,24 +22,4 @@ public final class Util {
             "https://api.themoviedb.org/3/movie/upcoming?api_key=" + API_KEY;
     public static final String REQUEST_TOP_RATED_MOVIES =
             "https://api.themoviedb.org/3/movie/top_rated?api_key=" + API_KEY;
-
-    public static final String JSON_OBJECT_GENRE_ACTION = "28";
-    public static final String JSON_OBJECT_GENRE_ADVENTURE = "12";
-    public static final String JSON_OBJECT_GENRE_ANIMATION = "16";
-    public static final String JSON_OBJECT_GENRE_COMEDY = "35";
-    public static final String JSON_OBJECT_GENRE_CRIME = "80";
-    public static final String JSON_OBJECT_GENRE_DOCUMENTARY = "99";
-    public static final String JSON_OBJECT_GENRE_DRAMA = "18";
-    public static final String JSON_OBJECT_GENRE_FAMILY = "10751";
-    public static final String JSON_OBJECT_GENRE_FANTASY = "14";
-    public static final String JSON_OBJECT_GENRE_HISTORY = "36";
-    public static final String JSON_OBJECT_GENRE_HORROR = "27";
-    public static final String JSON_OBJECT_GENRE_MUSIC = "10402";
-    public static final String JSON_OBJECT_GENRE_MYSTERY = "9648";
-    public static final String JSON_OBJECT_GENRE_ROMANCE = "10749";
-    public static final String JSON_OBJECT_GENRE_SCIENCE_FICTION = "878";
-    public static final String JSON_OBJECT_GENRE_TV_MOVIE = "10770";
-    public static final String JSON_OBJECT_GENRE_THRILLER = "53";
-    public static final String JSON_OBJECT_GENRE_WAR = "10752";
-    public static final String JSON_OBJECT_GENRE_WESTERN = "37";
 }

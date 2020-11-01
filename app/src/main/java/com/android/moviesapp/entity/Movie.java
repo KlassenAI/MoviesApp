@@ -31,11 +31,16 @@ public class Movie implements Parcelable {
     @ColumnInfo(name = "movie_rating")
     private String rating;
 
+
+
     private String votes;
 
     private boolean adult;
 
     private String overview;
+
+    private int[] genres_ids;
+
 
 
 
