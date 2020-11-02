@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="200dp"
+    android:background="@android:color/white"
+    android:layout_margin="4dp"
     android:orientation="horizontal">
 
     <ImageView
@@ -12,21 +14,18 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:layout_centerVertical="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp">
+        app:srcCompat="@drawable/ic_launcher_background">
 
     </ImageView>
 
     <ImageButton
         android:id="@+id/bookmark_movie_list_item"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:scaleType="fitXY"
+        android:background="@android:color/white"
         android:tint="@android:color/darker_gray"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="-12dp"
         app:srcCompat="@drawable/ic_bookmark_border_black_24dp">
 
     </ImageButton>
@@ -37,8 +36,7 @@
         android:layout_toEndOf="@id/poster_movie_list_item"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_marginStart="4dp">
 
         <TextView
             android:id="@+id/title_movie_list_item"
@@ -57,7 +55,7 @@
             android:fontFamily="@font/roboto_medium"
             android:textStyle="normal"
             android:textSize="16sp"
-            android:text="@string/default_year_movie" />
+            android:text="@string/default_date_movie" />
 
         <TextView
             android:id="@+id/rating_movie_list_item"

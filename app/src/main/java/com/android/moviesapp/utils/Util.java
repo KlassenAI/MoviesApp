@@ -11,6 +11,9 @@ public final class Util {
     public static final String JSON_OBJECT_MOVIE_POSTER = "poster_path";
     public static final String JSON_OBJECT_MOVIE_DATE = "release_date";
     public static final String JSON_OBJECT_MOVIE_RATING = "vote_average";
+    public static final String JSON_OBJECT_MOVIE_ADULT = "adult";
+    public static final String JSON_ARRAY_MOVIE_GENRES_IDS = "genre_ids";
+    public static final String JSON_OBJECT_MOVIE_OVERVIEW = "overview";
     public static final String JSON_OBJECT_MOVIE_VOTES = "vote_count";
     public static final String JSON_OBJECT_MOVIE_POPULARITY = "popularity";
 

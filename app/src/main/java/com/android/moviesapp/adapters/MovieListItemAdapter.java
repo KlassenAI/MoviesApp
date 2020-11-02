@@ -26,14 +26,14 @@ import java.util.List;
 public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdapter.MovieListItemViewHolder> {
 
     private Context mContext;
-    private List<ItemMovie> mMovies;
-    private AppDatabase mAppDatabase;
+    private List<ItemMovie> mItemMovies;
+    private AppDatabase mFavoritesAppDatabase;
     private MovieListItemType mMovieListItemType;
 
-    public MovieListItemAdapter(Context context, List<ItemMovie> movies, AppDatabase appDatabase, MovieListItemType type) {
+    public MovieListItemAdapter(Context context, List<ItemMovie> itemMovies, AppDatabase favoritesAppDatabase, MovieListItemType type) {
         mContext = context;
-        mMovies = movies;
-        mAppDatabase = appDatabase;
+        mItemMovies = itemMovies;
+        mFavoritesAppDatabase = favoritesAppDatabase;
         mMovieListItemType = type;
     }
 
@@ -70,14 +70,13 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
 
     @Override
     public void onBindViewHolder(final MovieListItemViewHolder holder, final int position) {
-        final ItemMovie currentMovie = mMovies.get(position);
+        final ItemMovie currentItemMovie = mItemMovies.get(position);
 
-        String id = currentMovie.getId();
-        final String title = currentMovie.getTitle();
-        String posterUrl = currentMovie.getPoster();
-        String date = currentMovie.getDate();
-        String rating = currentMovie.getRating();
-        final boolean favorite = currentMovie.isFavorite();
+        final String title = currentItemMovie.getTitle();
+        String posterUrl = currentItemMovie.getPoster();
+        String date = currentItemMovie.getDate();
+        String rating = currentItemMovie.getRating();
+        final boolean favorite = currentItemMovie.isFavorite();
 
         if (posterUrl == null) {
             holder.mPosterImageView.setImageResource(R.drawable.no_image);
@@ -93,7 +92,7 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
             holder.mBookmarkImageButton.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
         }
 
-        final Movie movie = new Movie(id, title, posterUrl, date, rating);
+        final Movie movie = currentItemMovie.getMovie();
 
         switch (mMovieListItemType) {
             case SEARCH:
@@ -107,7 +106,7 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
                             Toast.makeText(mContext, "Film " + title + " was added", Toast.LENGTH_SHORT).show();
                             new InsertMovieAsyncTask().execute(movie);
                         }
-                        mMovies.get(position).setFavorite(!favorite);
+                        mItemMovies.get(position).setFavorite(!favorite);
                     }
                 });
                 break;
@@ -117,7 +116,7 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
                     public void onClick(View view) {
                         Toast.makeText(mContext, "Film " + title + " was deleted", Toast.LENGTH_SHORT).show();
                         new DeleteMovieAsyncTask().execute(movie);
-                        mMovies.remove(position);
+                        mItemMovies.remove(position);
                     }
                 });
                 break;
@@ -127,7 +126,7 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, MovieActivity.class);
-                intent.putExtra(ItemMovie.class.getSimpleName(), currentMovie);
+                intent.putExtra(ItemMovie.class.getSimpleName(), currentItemMovie);
                 view.getContext().startActivity(intent);
             }
         });
@@ -135,14 +134,14 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
 
     @Override
     public int getItemCount() {
-        return mMovies.size();
+        return mItemMovies.size();
     }
 
     private class InsertMovieAsyncTask extends AsyncTask<Movie, Void, Void> {
 
         @Override
         protected Void doInBackground(Movie... movies) {
-            mAppDatabase.getWordDao().insertMovie(movies[0]);
+            mFavoritesAppDatabase.getWordDao().insertMovie(movies[0]);
             return null;
         }
 
@@ -157,7 +156,7 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
 
         @Override
         protected Void doInBackground(Movie... movies) {
-            mAppDatabase.getWordDao().deleteMovie(movies[0]);
+            mFavoritesAppDatabase.getWordDao().deleteMovie(movies[0]);
             return null;
         }
 

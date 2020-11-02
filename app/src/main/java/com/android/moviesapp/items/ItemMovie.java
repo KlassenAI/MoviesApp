@@ -15,14 +15,28 @@ public class ItemMovie extends Movie {
     private String date;
     private String rating;
     private boolean adult;
-    private String[] genres_ids;
+    private String genresIds;
     private String overview;
     private String votes;
     private String popularity;
     private boolean favorite;
 
-    public ItemMovie(String id, String title, String poster, String date, String rating, boolean adult, String[] genres_ids, String overview, String votes, String popularity, boolean favorite) {
-        super(id, title, poster, date, rating, adult, genres_ids, overview, votes, popularity);
+    public ItemMovie(String id, String title, String poster, String date, String rating, boolean adult, String genresIds, String overview, String votes, String popularity, boolean favorite) {
+        super(id, title, poster, date, rating, adult, genresIds, overview, votes, popularity);
+        this.favorite = favorite;
+    }
+
+    public ItemMovie(Movie movie, boolean favorite) {
+        super(movie.getId(),
+                movie.getTitle(),
+                movie.getPoster(),
+                movie.getDate(),
+                movie.getRating(),
+                movie.isAdult(),
+                movie.getGenresIds(),
+                movie.getOverview(),
+                movie.getVotes(),
+                movie.getPopularity());
         this.favorite = favorite;
     }
 
@@ -33,7 +47,7 @@ public class ItemMovie extends Movie {
         date = in.readString();
         rating = in.readString();
         adult = in.readByte() != 0;
-        genres_ids = in.createStringArray();
+        genresIds = in.readString();
         overview = in.readString();
         votes = in.readString();
         popularity = in.readString();
@@ -73,7 +87,7 @@ public class ItemMovie extends Movie {
         parcel.writeString(date);
         parcel.writeString(rating);
         parcel.writeByte((byte) (adult ? 1 : 0));
-        parcel.writeStringArray(genres_ids);
+        parcel.writeString(genresIds);
         parcel.writeString(overview);
         parcel.writeString(votes);
         parcel.writeString(popularity);
@@ -93,7 +107,7 @@ public class ItemMovie extends Movie {
                 Objects.equals(poster, movie.poster) &&
                 Objects.equals(date, movie.date) &&
                 Objects.equals(rating, movie.rating) &&
-                Arrays.equals(genres_ids, movie.genres_ids) &&
+                Objects.equals(genresIds, movie.genresIds) &&
                 Objects.equals(overview, movie.overview) &&
                 Objects.equals(votes, movie.votes) &&
                 Objects.equals(popularity, movie.popularity);
@@ -101,9 +115,7 @@ public class ItemMovie extends Movie {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(super.hashCode(), id, title, poster, date, rating, adult, overview, votes, popularity, favorite);
-        result = 31 * result + Arrays.hashCode(genres_ids);
-        return result;
+        return Objects.hash(super.hashCode(), id, title, poster, date, rating, adult, genresIds, overview, votes, popularity, favorite);
     }
 }
 

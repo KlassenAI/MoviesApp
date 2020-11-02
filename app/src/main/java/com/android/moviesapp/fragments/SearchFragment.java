@@ -15,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.moviesapp.R;
 import com.android.moviesapp.adapters.MovieListItemAdapter;
@@ -133,7 +132,19 @@ public class SearchFragment extends Fragment {
                         String image = jsonObject.getString(Util.JSON_OBJECT_MOVIE_POSTER);
                         String date = jsonObject.getString(Util.JSON_OBJECT_MOVIE_DATE);
                         String rating = jsonObject.getString(Util.JSON_OBJECT_MOVIE_RATING);
-                        Movie movie = new Movie(id, title, image, date, rating);
+                        boolean adult = jsonObject.getBoolean(Util.JSON_OBJECT_MOVIE_ADULT);
+
+                        JSONArray jsonArrayGenresIds = jsonObject.getJSONArray(Util.JSON_ARRAY_MOVIE_GENRES_IDS);
+                        StringBuilder builder = new StringBuilder();
+                        for (int j = 0; j < jsonArrayGenresIds.length(); ++j) {
+                            builder.append(jsonArrayGenresIds.getInt(j));
+                            if (j != jsonArrayGenresIds.length() - 1) builder.append(",");
+                        }
+                        String genresIds = builder.toString();
+                        String overview = jsonObject.getString(Util.JSON_OBJECT_MOVIE_OVERVIEW);
+                        String votes = jsonObject.getString(Util.JSON_OBJECT_MOVIE_VOTES);
+                        String popularity = jsonObject.getString(Util.JSON_OBJECT_MOVIE_POPULARITY);
+                        Movie movie = new Movie(id, title, image, date, rating, adult, genresIds, overview, votes, popularity);
 
                         if (mMovieListFromDB.contains(movie)) {
                             mItemMovieList.add(new ItemMovie(movie, true));

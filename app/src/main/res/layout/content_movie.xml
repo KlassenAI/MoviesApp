@@ -37,6 +37,7 @@
             android:text="@string/genres" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movie_genres_activity_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
@@ -103,5 +104,32 @@
         </LinearLayout>
 
     </GridLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_favorites" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/more_details" />
+
+        <TextView
+            android:id="@+id/movie_adult_activity_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/movie_date_activity_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
