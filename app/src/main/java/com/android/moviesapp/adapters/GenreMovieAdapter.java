@@ -29,21 +29,19 @@ public class GenreMovieAdapter extends RecyclerView.Adapter<GenreMovieAdapter.Ge
         public GenreMovieViewHolder(View itemView) {
             super(itemView);
 
-            mGenreTextView = itemView.findViewById(R.id.genre_movie_text_view);
         }
     }
 
     @Override
     public GenreMovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.genre_item,
-                parent, false);
-        return new GenreMovieViewHolder(view);
+
+        return null;
     }
 
     @Override
     public void onBindViewHolder(GenreMovieViewHolder holder, int position) {
         String genre = getGenre(mGenres.get(position));
-
+        holder.mGenreTextView.setText(genre);
     }
 
     @Override
