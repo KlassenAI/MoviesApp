@@ -134,10 +134,10 @@ public class SearchFragment extends Fragment {
                         String rating = jsonObject.getString(Util.JSON_OBJECT_MOVIE_RATING);
                         boolean adult = jsonObject.getBoolean(Util.JSON_OBJECT_MOVIE_ADULT);
 
-                        JSONArray jsonArrayGenresIds = jsonObject.getJSONArray(Util.JSON_ARRAY_MOVIE_GENRES_IDS);
+                        JSONArray jsonArrayGenresIds = jsonObject.getJSONArray(Util.JSON_ARRAY_MOVIE_GENRE_IDS);
                         StringBuilder builder = new StringBuilder();
-                        for (int j = 0; j < jsonArrayGenresIds.length(); ++j) {
-                            builder.append(jsonArrayGenresIds.getInt(j));
+                        for (int j = 0; j < jsonArrayGenresIds.length(); j++) {
+                            builder.append(jsonArrayGenresIds.getString(j));
                             if (j != jsonArrayGenresIds.length() - 1) builder.append(",");
                         }
                         String genresIds = builder.toString();

@@ -21,22 +21,17 @@ public class ItemMovie extends Movie {
     private String popularity;
     private boolean favorite;
 
-    public ItemMovie(String id, String title, String poster, String date, String rating, boolean adult, String genresIds, String overview, String votes, String popularity, boolean favorite) {
-        super(id, title, poster, date, rating, adult, genresIds, overview, votes, popularity);
-        this.favorite = favorite;
-    }
-
     public ItemMovie(Movie movie, boolean favorite) {
-        super(movie.getId(),
-                movie.getTitle(),
-                movie.getPoster(),
-                movie.getDate(),
-                movie.getRating(),
-                movie.isAdult(),
-                movie.getGenresIds(),
-                movie.getOverview(),
-                movie.getVotes(),
-                movie.getPopularity());
+        this.id = movie.getId();
+        this.title = movie.getTitle();
+        this.poster = movie.getPoster();
+        this.date = movie.getDate();
+        this.rating = movie.getRating();
+        this.adult = movie.isAdult();
+        this.genresIds = movie.getGenresIds();
+        this.overview = movie.getOverview();
+        this.votes = movie.getVotes();
+        this.popularity = movie.getPopularity();
         this.favorite = favorite;
     }
 
@@ -66,12 +61,116 @@ public class ItemMovie extends Movie {
         }
     };
 
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getPoster() {
+        return poster;
+    }
+
+    @Override
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    @Override
+    public String getDate() {
+        return date;
+    }
+
+    @Override
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    @Override
+    public String getRating() {
+        return rating;
+    }
+
+    @Override
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    @Override
+    public boolean isAdult() {
+        return adult;
+    }
+
+    @Override
+    public void setAdult(boolean adult) {
+        this.adult = adult;
+    }
+
+    @Override
+    public String getGenresIds() {
+        return genresIds;
+    }
+
+    @Override
+    public void setGenresIds(String genresIds) {
+        this.genresIds = genresIds;
+    }
+
+    @Override
+    public String getOverview() {
+        return overview;
+    }
+
+    @Override
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    @Override
+    public String getVotes() {
+        return votes;
+    }
+
+    @Override
+    public void setVotes(String votes) {
+        this.votes = votes;
+    }
+
+    @Override
+    public String getPopularity() {
+        return popularity;
+    }
+
+    @Override
+    public void setPopularity(String popularity) {
+        this.popularity = popularity;
+    }
+
     public boolean isFavorite() {
         return favorite;
     }
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public Movie getMovie() {
+        return new Movie(id, title, poster, date, rating, adult, genresIds, overview, votes, popularity);
     }
 
     @Override
@@ -116,6 +215,23 @@ public class ItemMovie extends Movie {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), id, title, poster, date, rating, adult, genresIds, overview, votes, popularity, favorite);
+    }
+
+    @Override
+    public String toString() {
+        return "ItemMovie{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", poster='" + poster + '\'' +
+                ", date='" + date + '\'' +
+                ", rating='" + rating + '\'' +
+                ", adult=" + adult +
+                ", genresIds='" + genresIds + '\'' +
+                ", overview='" + overview + '\'' +
+                ", votes='" + votes + '\'' +
+                ", popularity='" + popularity + '\'' +
+                ", favorite=" + favorite +
+                '}';
     }
 }
 

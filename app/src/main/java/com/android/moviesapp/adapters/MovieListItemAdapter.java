@@ -92,6 +92,16 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
             holder.mBookmarkImageButton.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
         }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Intent intent = new Intent(mContext, MovieActivity.class);
+                Toast.makeText(mContext, currentItemMovie.toString(), Toast.LENGTH_SHORT).show();
+                // intent.putExtra("ItemMovie", currentItemMovie);
+                // view.getContext().startActivity(intent);
+            }
+        });
+
         final Movie movie = currentItemMovie.getMovie();
 
         switch (mMovieListItemType) {
@@ -121,15 +131,6 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
                 });
                 break;
         }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, MovieActivity.class);
-                intent.putExtra(ItemMovie.class.getSimpleName(), currentItemMovie);
-                view.getContext().startActivity(intent);
-            }
-        });
     }
 
     @Override

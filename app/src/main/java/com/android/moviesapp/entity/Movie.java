@@ -169,10 +169,6 @@ public class Movie implements Parcelable {
         this.popularity = popularity;
     }
 
-    public Movie getMovie() {
-        return new Movie(id, title, poster, date, rating, adult, genresIds, overview, votes, popularity);
-    }
-
     @Override
     public int describeContents() {
         return 0;

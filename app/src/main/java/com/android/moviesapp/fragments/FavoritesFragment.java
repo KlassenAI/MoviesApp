@@ -53,8 +53,12 @@ public class FavoritesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
         mRecyclerView = rootView.findViewById(R.id.favorites_movies_recycler_view);
 
-        if (mItemMovieList == null) mItemMovieList = new ArrayList<>();
+        if (mItemMovieList == null) {
+            mItemMovieList = new ArrayList<>();
+
+        }
         mMovieList = new ArrayList<>();
+        new GetAllWordsAsyncTask().execute();
         mMovieListItemAdapter = new MovieListItemAdapter(getActivity(), mItemMovieList, mMovieAppDatabase,
                 MovieListItemAdapter.MovieListItemType.FAVORITE);
         mRecyclerView.setAdapter(mMovieListItemAdapter);
@@ -65,8 +69,6 @@ public class FavoritesFragment extends Fragment {
         mRequestQueue = Volley.newRequestQueue(getActivity());
 
         setHasOptionsMenu(true);
-
-        new GetAllWordsAsyncTask().execute();
 
         return rootView;
     }

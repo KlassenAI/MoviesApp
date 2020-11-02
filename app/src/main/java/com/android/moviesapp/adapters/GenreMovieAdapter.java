@@ -29,13 +29,15 @@ public class GenreMovieAdapter extends RecyclerView.Adapter<GenreMovieAdapter.Ge
         public GenreMovieViewHolder(View itemView) {
             super(itemView);
 
+            mGenreTextView = itemView.findViewById(R.id.movie_genre_item_text_view);
         }
     }
 
     @Override
     public GenreMovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        return null;
+        View view = LayoutInflater.from(mContext).inflate(R.layout.movie_genre_item,
+                parent, false);
+        return new GenreMovieViewHolder(view);
     }
 
     @Override
