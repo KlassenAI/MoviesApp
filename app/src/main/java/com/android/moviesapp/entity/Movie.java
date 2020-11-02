@@ -173,27 +173,27 @@ public class Movie implements Parcelable {
         return new Movie(id, title, poster, date, rating, adult, genresIds, overview, votes, popularity);
     }
 
-    public static String getGenre(int id) {
+    public static String getGenre(String id) {
         switch (id) {
-            case 12: return "Adventure";
-            case 14: return "Fantasy";
-            case 16: return "Animation";
-            case 18: return "Drama";
-            case 27: return "Horror";
-            case 28: return "Action";
-            case 35: return "Comedy";
-            case 36: return "History";
-            case 37: return "Western";
-            case 53: return "Thriller";
-            case 80: return "Crime";
-            case 99: return "Documentary";
-            case 878: return "Science Fiction";
-            case 9648: return "Mystery";
-            case 10402: return "Music";
-            case 10749: return "Romance";
-            case 10751: return "Family";
-            case 10752: return "War";
-            case 10770: return "TV Movie";
+            case "12": return "Adventure";
+            case "14": return "Fantasy";
+            case "16": return "Animation";
+            case "18": return "Drama";
+            case "27": return "Horror";
+            case "28": return "Action";
+            case "35": return "Comedy";
+            case "36": return "History";
+            case "37": return "Western";
+            case "53": return "Thriller";
+            case "80": return "Crime";
+            case "99": return "Documentary";
+            case "878": return "Science Fiction";
+            case "9648": return "Mystery";
+            case "10402": return "Music";
+            case "10749": return "Romance";
+            case "10751": return "Family";
+            case "10752": return "War";
+            case "10770": return "TV Movie";
             default: return "No name";
         }
     }

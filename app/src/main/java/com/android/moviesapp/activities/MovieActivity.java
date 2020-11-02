@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 
 public class MovieActivity extends AppCompatActivity {
 
-    ImageView mImageView;
+    ImageView mPosterImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +28,17 @@ public class MovieActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mImageView = findViewById(R.id.poster_movie_activity_item);
+        mPosterImageView = findViewById(R.id.poster_movie_activity_item);
 
         Intent intent = getIntent();
         if (intent != null) {
             ItemMovie movie = intent.getParcelableExtra(ItemMovie.class.getSimpleName());
             setTitle(movie.getTitle());
-            Picasso.get().load(Util.REQUEST_IMAGE + movie.getPoster()).fit().centerInside().into(mImageView);
+            if (movie.getPoster() == null) {
+                mPosterImageView.setImageResource(R.drawable.no_image);
+            } else {
+                Picasso.get().load(Util.REQUEST_IMAGE + movie.getPoster()).fit().centerInside().into(mPosterImageView);
+            }
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
