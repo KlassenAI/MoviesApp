@@ -10,9 +10,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.moviesapp.R;
 import com.squareup.picasso.Picasso;
@@ -20,6 +22,8 @@ import com.squareup.picasso.Picasso;
 public class MovieActivity extends AppCompatActivity {
 
     ImageView mPosterImageView;
+    TextView mOverviewTextView;
+    RecyclerView mGenresRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,8 @@ public class MovieActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mPosterImageView = findViewById(R.id.poster_movie_activity_item);
+        mPosterImageView = findViewById(R.id.movie_poster_activity_item);
+        mOverviewTextView = findViewById(R.id.movie_overview_activity_item);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -39,6 +44,9 @@ public class MovieActivity extends AppCompatActivity {
             } else {
                 Picasso.get().load(Util.REQUEST_IMAGE + movie.getPoster()).fit().centerInside().into(mPosterImageView);
             }
+            mOverviewTextView.setText(movie.getOverview());
+            String[] genres = movie.getGenresIds().split(",");
+
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
