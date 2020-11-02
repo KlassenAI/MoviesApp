@@ -15,12 +15,19 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            app:collapseIcon="@drawable/ic_arrow_back_black_24dp"
+            android:theme="@style/ActionBarThemeOverlay"
+            app:popupTheme="@style/ActionBarThemeOverlay"
+            app:titleTextColor="@color/colorPrimaryDark"
+            android:background="?attr/colorAccent"
             android:layout_height="?attr/actionBarSize" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/main_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabTextColor="?attr/colorPrimaryDark"
+            app:tabIndicatorColor="?attr/colorPrimaryDark"
             android:background="?attr/colorPrimary">
 
             <com.google.android.material.tabs.TabItem

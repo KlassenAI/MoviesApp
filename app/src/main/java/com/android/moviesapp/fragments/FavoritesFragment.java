@@ -55,7 +55,6 @@ public class FavoritesFragment extends Fragment {
 
         if (mItemMovieList == null) {
             mItemMovieList = new ArrayList<>();
-
         }
         mMovieList = new ArrayList<>();
         new GetAllWordsAsyncTask().execute();

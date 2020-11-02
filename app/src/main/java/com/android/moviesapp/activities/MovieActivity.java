@@ -53,9 +53,7 @@ public class MovieActivity extends AppCompatActivity {
         mPopularityTextView = findViewById(R.id.movie_popularity_activity_item);
         mVotesTextView = findViewById(R.id.movie_votes_activity_item);
 
-        mGenres = new ArrayList<>();
-        mGenreMovieAdapter = new GenreMovieAdapter(this, mGenres);
-        mGenresRecyclerView.setAdapter(mGenreMovieAdapter);
+
 
         RecyclerView.LayoutManager mGenresLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mGenresRecyclerView.setLayoutManager(mGenresLayoutManager);
@@ -70,7 +68,14 @@ public class MovieActivity extends AppCompatActivity {
             Picasso.get().load(Util.REQUEST_IMAGE + movie.getPoster()).fit().centerInside().into(mPosterImageView);
         }
         mOverviewTextView.setText(movie.getOverview());
-        if (movie.getGenresIds() != null) mGenres = Arrays.asList(movie.getGenresIds().split(","));
+        if (movie.getGenresIds() == null) {
+            mGenres = new ArrayList<>();
+        } else {
+            mGenres = Arrays.asList(movie.getGenresIds().split(","));
+            Toast.makeText(this, mGenres.toString(), Toast.LENGTH_SHORT).show();
+        }
+        mGenreMovieAdapter = new GenreMovieAdapter(this, mGenres);
+        mGenresRecyclerView.setAdapter(mGenreMovieAdapter);
         mGenreMovieAdapter.notifyDataSetChanged();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

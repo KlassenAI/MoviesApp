@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.moviesapp.R;
 import com.android.moviesapp.adapters.MovieListItemAdapter;
@@ -112,20 +113,20 @@ public class SearchFragment extends Fragment {
         }
     }
 
-    private void getMovies(String request) {
+    private void getMovies(final String request) {
         String url = Util.REQUEST_MOVIE_SEARCH + request;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    JSONArray jsonArray = response.getJSONArray(Util.JSON_ARRAY_MOVIE_RESULTS);
+                    JSONArray jsonArrayMovieResults = response.getJSONArray(Util.JSON_ARRAY_MOVIE_RESULTS);
 
                     mItemMovieList.clear();
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < jsonArrayMovieResults.length(); i++) {
 
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        JSONObject jsonObject = jsonArrayMovieResults.getJSONObject(i);
 
                         String id = jsonObject.getString(Util.JSON_OBJECT_MOVIE_ID);
                         String title = jsonObject.getString(Util.JSON_OBJECT_MOVIE_TITLE);

@@ -95,10 +95,9 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Intent intent = new Intent(mContext, MovieActivity.class);
-                Toast.makeText(mContext, currentItemMovie.toString(), Toast.LENGTH_SHORT).show();
-                // intent.putExtra("ItemMovie", currentItemMovie);
-                // view.getContext().startActivity(intent);
+                Intent intent = new Intent(mContext, MovieActivity.class);
+                intent.putExtra("ItemMovie", currentItemMovie);
+                view.getContext().startActivity(intent);
             }
         });
 
