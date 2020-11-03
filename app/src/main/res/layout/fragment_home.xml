@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundRecyclerView"
+    android:background="@color/colorWhiteSmoke"
     android:fillViewport="true">
 
     <FrameLayout
@@ -25,7 +25,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/roboto_medium"
-                android:textStyle="bold"
+                android:textColor="@color/colorMainText"
                 android:textSize="24sp"
                 android:text="@string/current_popular_movies" />
 
@@ -43,7 +43,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/roboto_medium"
-                android:textStyle="bold"
+                android:textColor="@color/colorMainText"
                 android:textSize="24sp"
                 android:text="@string/upcoming_movies" />
 
@@ -61,7 +61,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/roboto_medium"
-                android:textStyle="bold"
+                android:textColor="@color/colorMainText"
                 android:textSize="24sp"
                 android:text="@string/top_rated_movies" />
 

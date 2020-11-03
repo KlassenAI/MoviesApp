@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundRecyclerView"
+    android:background="@color/colorWhiteSmoke"
     tools:context=".fragments.SearchFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_movies_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="4dp" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

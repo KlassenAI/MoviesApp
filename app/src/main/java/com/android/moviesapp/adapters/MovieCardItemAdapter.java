@@ -14,6 +14,7 @@ import com.android.moviesapp.entity.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MovieCardItemAdapter extends RecyclerView.Adapter<MovieCardItemAdapter.MovieCardItemViewHolder> {
 
@@ -59,7 +60,7 @@ public class MovieCardItemAdapter extends RecyclerView.Adapter<MovieCardItemAdap
 
         Picasso.get().load("https://image.tmdb.org/t/p/original" + posterUrl).fit().centerInside().into(holder.mPosterImageView);
         holder.mTitleTextView.setText(title);
-        holder.mIndexTextView.setText(String.valueOf(position + 1));
+        holder.mIndexTextView.setText(String.format(Locale.getDefault(), "#%d", position + 1));
         holder.mRatingTextView.setText(rating);
     }
 

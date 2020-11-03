@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.moviesapp.R;
+import com.android.moviesapp.activities.MainActivity;
 import com.android.moviesapp.activities.MovieActivity;
 import com.android.moviesapp.db.AppDatabase;
 import com.android.moviesapp.entity.Movie;
@@ -29,12 +31,14 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
     private List<ItemMovie> mItemMovies;
     private AppDatabase mFavoritesAppDatabase;
     private MovieListItemType mMovieListItemType;
+    private Fragment mFragment;
 
-    public MovieListItemAdapter(Context context, List<ItemMovie> itemMovies, AppDatabase favoritesAppDatabase, MovieListItemType type) {
+    public MovieListItemAdapter(Context context, List<ItemMovie> itemMovies, AppDatabase favoritesAppDatabase, MovieListItemType type, Fragment fragment) {
         mContext = context;
         mItemMovies = itemMovies;
         mFavoritesAppDatabase = favoritesAppDatabase;
         mMovieListItemType = type;
+        mFragment = fragment;
     }
 
     public class MovieListItemViewHolder extends RecyclerView.ViewHolder {
@@ -95,9 +99,19 @@ public class MovieListItemAdapter extends RecyclerView.Adapter<MovieListItemAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(mContext, MovieActivity.class);
                 intent.putExtra("ItemMovie", currentItemMovie);
-                view.getContext().startActivity(intent);
+                intent.putExtra("Index", position);
+                switch (mMovieListItemType) {
+                    case SEARCH:
+                        mFragment.startActivityForResult(intent, Util.SEARCH_FRAGMENT_REQUEST_CODE);
+                        break;
+                    case FAVORITE:
+                        mFragment.startActivityForResult(intent, Util.FAVORITES_FRAGMENT_REQUEST_CODE);
+                        break;
+                }
+
             }
         });
 

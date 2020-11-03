@@ -1,9 +1,11 @@
 package com.android.moviesapp.fragments;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,11 +20,12 @@ import com.android.moviesapp.adapters.MovieListItemAdapter;
 import com.android.moviesapp.db.AppDatabase;
 import com.android.moviesapp.entity.Movie;
 import com.android.moviesapp.items.ItemMovie;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import com.android.moviesapp.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -31,15 +34,13 @@ import java.util.List;
 public class FavoritesFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private MovieListItemAdapter mMovieListItemAdapter;
+    private MovieListItemAdapter mItemMovieListAdapter;
     private List<ItemMovie> mItemMovieList;
     private List<Movie> mMovieList;
-    private RequestQueue mRequestQueue;
 
     private AppDatabase mMovieAppDatabase = App.getAppDatabase();
 
     public FavoritesFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -58,18 +59,27 @@ public class FavoritesFragment extends Fragment {
         }
         mMovieList = new ArrayList<>();
         new GetAllWordsAsyncTask().execute();
-        mMovieListItemAdapter = new MovieListItemAdapter(getActivity(), mItemMovieList, mMovieAppDatabase,
-                MovieListItemAdapter.MovieListItemType.FAVORITE);
-        mRecyclerView.setAdapter(mMovieListItemAdapter);
+        mItemMovieListAdapter = new MovieListItemAdapter(getActivity(), mItemMovieList, mMovieAppDatabase,
+                MovieListItemAdapter.MovieListItemType.FAVORITE, FavoritesFragment.this);
+        mRecyclerView.setAdapter(mItemMovieListAdapter);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRequestQueue = Volley.newRequestQueue(getActivity());
-
         setHasOptionsMenu(true);
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Util.FAVORITES_FRAGMENT_REQUEST_CODE & resultCode == RESULT_OK) {
+            boolean favorite = data.getBooleanExtra("Favorite", false);
+            if (!favorite) {
+                mItemMovieList.remove(data.getIntExtra("Index", 0));
+                mItemMovieListAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     private class GetAllWordsAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -88,7 +98,7 @@ public class FavoritesFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            mMovieListItemAdapter.notifyDataSetChanged();
+            mItemMovieListAdapter.notifyDataSetChanged();
         }
     }
 }

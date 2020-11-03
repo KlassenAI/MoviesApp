@@ -2,6 +2,8 @@ package com.android.moviesapp.utils;
 
 public final class Util {
     public static final String DB_FAVORITES_MOVIES = "favorites_movies";
+    public static final int SEARCH_FRAGMENT_REQUEST_CODE = 101;
+    public static final int FAVORITES_FRAGMENT_REQUEST_CODE = 102;
 
     private static final String API_KEY = "23400594aacd1f278d52fb2763517318";
 

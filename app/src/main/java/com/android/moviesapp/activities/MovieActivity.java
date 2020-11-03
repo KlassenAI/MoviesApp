@@ -1,9 +1,13 @@
 package com.android.moviesapp.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.android.moviesapp.App;
 import com.android.moviesapp.adapters.GenreMovieAdapter;
+import com.android.moviesapp.db.AppDatabase;
+import com.android.moviesapp.entity.Movie;
 import com.android.moviesapp.items.ItemMovie;
 import com.android.moviesapp.utils.Util;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,6 +33,7 @@ import java.util.List;
 public class MovieActivity extends AppCompatActivity {
 
     ImageView mPosterImageView;
+    TextView mTitleTextView;
     TextView mOverviewTextView;
     TextView mRatingTextView;
     TextView mPopularityTextView;
@@ -36,8 +41,14 @@ public class MovieActivity extends AppCompatActivity {
 
     RecyclerView mGenresRecyclerView;
     GenreMovieAdapter mGenreMovieAdapter;
+    FloatingActionButton mFloatingActionButton;
 
     List<String> mGenres;
+    ItemMovie mItemMovie;
+    boolean mChangeFavoriteFlag;
+    int position;
+
+    private AppDatabase mAppDatabase = App.getAppDatabase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,45 +57,103 @@ public class MovieActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setTitle("");
+
         mPosterImageView = findViewById(R.id.movie_poster_activity_item);
+        mTitleTextView = findViewById(R.id.movie_title_activity_item);
         mOverviewTextView = findViewById(R.id.movie_overview_activity_item);
         mGenresRecyclerView = findViewById(R.id.movie_genres_activity_item);
         mRatingTextView = findViewById(R.id.movie_rating_activity_item);
         mPopularityTextView = findViewById(R.id.movie_popularity_activity_item);
         mVotesTextView = findViewById(R.id.movie_votes_activity_item);
 
-
+        mChangeFavoriteFlag = false;
 
         RecyclerView.LayoutManager mGenresLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mGenresRecyclerView.setLayoutManager(mGenresLayoutManager);
 
         Intent intent = getIntent();
-        ItemMovie movie = intent.getParcelableExtra("ItemMovie");
-        Toast.makeText(this, movie.toString(), Toast.LENGTH_SHORT).show();
-        setTitle(movie.getTitle());
-        if (movie.getPoster() == null) {
+        position = intent.getIntExtra("Index", 0);
+        Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
+        mItemMovie = intent.getParcelableExtra("ItemMovie");
+        mTitleTextView.setText(mItemMovie.getTitle());
+        if (mItemMovie.getPoster() == null) {
             mPosterImageView.setImageResource(R.drawable.no_image);
         } else {
-            Picasso.get().load(Util.REQUEST_IMAGE + movie.getPoster()).fit().centerInside().into(mPosterImageView);
+            Picasso.get().load(Util.REQUEST_IMAGE + mItemMovie.getPoster()).fit().centerInside().into(mPosterImageView);
         }
-        mOverviewTextView.setText(movie.getOverview());
-        if (movie.getGenresIds() == null) {
+        mOverviewTextView.setText(mItemMovie.getOverview());
+        if (mItemMovie.getGenresIds() == null) {
             mGenres = new ArrayList<>();
         } else {
-            mGenres = Arrays.asList(movie.getGenresIds().split(","));
-            Toast.makeText(this, mGenres.toString(), Toast.LENGTH_SHORT).show();
+            mGenres = Arrays.asList(mItemMovie.getGenresIds().split(","));
+            if (mGenres.size() == 0) {
+                mGenresRecyclerView.setVisibility(View.GONE);
+            }
         }
         mGenreMovieAdapter = new GenreMovieAdapter(this, mGenres);
         mGenresRecyclerView.setAdapter(mGenreMovieAdapter);
         mGenreMovieAdapter.notifyDataSetChanged();
+        mRatingTextView.setText(mItemMovie.getRating());
+        mPopularityTextView.setText(mItemMovie.getPopularity());
+        mVotesTextView.setText(mItemMovie.getVotes());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.bookmark_movie_activity_item);
+        if (mItemMovie.isFavorite()) {
+            mFloatingActionButton.setImageResource(R.drawable.ic_bookmark_black_24dp);
+        }
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (mItemMovie.isFavorite()) {
+                    mFloatingActionButton.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
+                    mItemMovie.setFavorite(false);
+                    new DeleteMovieAsyncTask().execute(mItemMovie.getMovie());
+                } else {
+                    mFloatingActionButton.setImageResource(R.drawable.ic_bookmark_black_24dp);
+                    mItemMovie.setFavorite(true);
+                    new InsertMovieAsyncTask().execute(mItemMovie.getMovie());
+                }
+                mChangeFavoriteFlag = !mChangeFavoriteFlag; // пользователь может добавить и убрать фильм
             }
         });
+    }
+
+    private class InsertMovieAsyncTask extends AsyncTask<Movie, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Movie... movies) {
+            mAppDatabase.getWordDao().insertMovie(movies[0]);
+            return null;
+        }
+    }
+
+    private class DeleteMovieAsyncTask extends AsyncTask<Movie, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Movie... movies) {
+            mAppDatabase.getWordDao().deleteMovie(movies[0]);
+            return null;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                Intent data = new Intent();
+                data.putExtra("Favorite", mItemMovie.isFavorite());
+                data.putExtra("Index", position);
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        }.execute();
     }
 }

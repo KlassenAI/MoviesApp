@@ -1,11 +1,14 @@
 package com.android.moviesapp.fragments;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.moviesapp.App;
 import com.android.moviesapp.R;
+import com.android.moviesapp.activities.MainActivity;
 import com.android.moviesapp.adapters.MovieListItemAdapter;
 import com.android.moviesapp.db.AppDatabase;
 import com.android.moviesapp.entity.Movie;
@@ -37,6 +42,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,11 +55,19 @@ public class SearchFragment extends Fragment {
     private List<ItemMovie> mItemMovieList;
     private List<Movie> mMovieListFromDB;
     private RequestQueue mRequestQueue;
-    private AppDatabase mAppDatabase;
+    private AppDatabase mAppDatabase = App.getAppDatabase();
 
-    public SearchFragment(AppDatabase appDatabase) {
-        // Required empty public constructor
-        mAppDatabase = appDatabase;
+    public SearchFragment() {
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Util.SEARCH_FRAGMENT_REQUEST_CODE & resultCode == RESULT_OK) {
+            boolean favorite = data.getBooleanExtra("Favorite", false);
+            int index = data.getIntExtra("Index", 0);
+            mItemMovieList.get(index).setFavorite(favorite);
+            mMovieListItemAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -72,11 +87,16 @@ public class SearchFragment extends Fragment {
         new GettingAllFavoritesMovies().execute();
 
         mMovieListItemAdapter = new MovieListItemAdapter(getActivity(), mItemMovieList, mAppDatabase,
-                MovieListItemAdapter.MovieListItemType.SEARCH);
+                MovieListItemAdapter.MovieListItemType.SEARCH, SearchFragment.this);
         mRecyclerView.setAdapter(mMovieListItemAdapter);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider));
+
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
 
         mRequestQueue = Volley.newRequestQueue(getActivity());
 

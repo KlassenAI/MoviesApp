@@ -7,10 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.moviesapp.App;
 import com.android.moviesapp.R;
 import com.android.moviesapp.adapters.PageAdapter;
-import com.android.moviesapp.db.AppDatabase;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
@@ -24,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private TabItem mHomeTabItem;
     private TabItem mFavoritesTabItem;
     public PagerAdapter mPagerAdapter;
-
-    private AppDatabase mAppDatabase = App.getAppDatabase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mFavoritesTabItem = (TabItem) findViewById(R.id.favorites_tab_item);
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
 
-        mPagerAdapter = new PageAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(), mAppDatabase);
+        mPagerAdapter = new PageAdapter(getSupportFragmentManager(), mTabLayout.getTabCount(), MainActivity.this);
         mViewPager.setAdapter(mPagerAdapter);
 
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

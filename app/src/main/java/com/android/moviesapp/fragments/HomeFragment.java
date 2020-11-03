@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.moviesapp.R;
+import com.android.moviesapp.activities.MainActivity;
 import com.android.moviesapp.adapters.MovieCardItemAdapter;
 import com.android.moviesapp.entity.Movie;
 import com.android.moviesapp.utils.Util;
@@ -50,7 +51,6 @@ public class HomeFragment extends Fragment {
     private RequestQueue mRequestQueue;
 
     public HomeFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -240,5 +240,10 @@ public class HomeFragment extends Fragment {
         });
 
         mRequestQueue.add(jsonObjectRequest);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }
