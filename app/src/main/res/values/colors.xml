@@ -3,4 +3,7 @@
     <color name="colorAccent">#f26723</color>
     <color name="colorPrimary">#CCF26723</color>
     <color name="colorPrimaryDark">#1d1d1d</color>
+    <color name="backgroundRecyclerView">#CCCCCC</color>
+    <color name="colorWhiteSmoke">#F5F5F5</color>
+    <color name="colorSecondaryText">#666666</color>
 </resources>

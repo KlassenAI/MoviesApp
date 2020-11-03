@@ -7,7 +7,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="default_title_movie">Title</string>
     <string name="default_year_movie">Year</string>
-    <string name="default_rating_movie">Rating</string>
+    <string name="default_rating_movie">0.0</string>
     <string name="default_index_movie">#0</string>
     <string name="current_popular_movies">Current Popular Movies</string>
     <string name="upcoming_movies">Upcoming Movies</string>

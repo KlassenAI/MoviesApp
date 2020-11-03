@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:background="@android:color/white"
-    android:layout_margin="4dp"
+    android:layout_marginBottom="4dp"
     android:orientation="horizontal">
 
     <ImageView
@@ -20,11 +20,11 @@
 
     <ImageButton
         android:id="@+id/bookmark_movie_list_item"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="-11dp"
         android:scaleType="fitXY"
-        android:background="@android:color/white"
-        android:tint="@color/colorPrimaryDark"
+        android:background="#00FFFFFF"
         android:layout_alignParentEnd="true"
         app:srcCompat="@drawable/ic_bookmark_border_black_24dp">
 
@@ -54,7 +54,7 @@
             android:layout_marginTop="4dp"
             android:fontFamily="@font/roboto_medium"
             android:textSize="16sp"
-            android:textColor="#666666"
+            android:textColor="@color/colorSecondaryText"
             android:text="@string/default_date_movie" />
 
         <LinearLayout
@@ -70,16 +70,14 @@
                 app:srcCompat="@drawable/ic_star_black_24dp"
                 android:layout_gravity="center_vertical"
                 android:tint="#ffff00"
-
                 android:background="@android:color/white" />
 
             <TextView
                 android:id="@+id/rating_movie_list_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:fontFamily="@font/roboto_medium"
-                android:textColor="#666666"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="16sp"
                 android:text="@string/default_rating_movie" />
 
