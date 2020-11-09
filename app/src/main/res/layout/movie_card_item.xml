@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/title_movie_card_item"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginStart="4dp"
@@ -39,8 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:weightSum="120"
             android:orientation="horizontal">
@@ -49,6 +49,7 @@
                 android:id="@+id/index_movie_card_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/roboto_medium"
                 android:textStyle="normal"
                 android:textSize="14sp"
@@ -68,7 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="4dp"
                 android:fontFamily="@font/roboto_medium"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="16sp"

@@ -5,7 +5,7 @@ public final class Util {
     public static final int SEARCH_FRAGMENT_REQUEST_CODE = 101;
     public static final int FAVORITES_FRAGMENT_REQUEST_CODE = 102;
 
-    private static final String API_KEY = "23400594aacd1f278d52fb2763517318";
+    public static final String API_KEY = "23400594aacd1f278d52fb2763517318";
 
     public static final String JSON_ARRAY_MOVIE_RESULTS = "results";
     public static final String JSON_OBJECT_MOVIE_ID = "id";
@@ -26,7 +26,7 @@ public final class Util {
     public static final String REQUEST_CURRENT_POPULAR_MOVIES =
             "https://api.themoviedb.org/3/movie/popular?api_key=" + API_KEY;
     public static final String REQUEST_UPCOMING_MOVIES =
-            "https://api.themoviedb.org/3/movie/upcoming?api_key=" + API_KEY;
+            "https://api.themoviedb.org/3/discover/movie?api_key=" + Util.API_KEY + "&sort_by=release_date.asc&primary_release_date.gte=";
     public static final String REQUEST_TOP_RATED_MOVIES =
             "https://api.themoviedb.org/3/movie/top_rated?api_key=" + API_KEY;
 }

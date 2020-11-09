@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -16,7 +15,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/movie_title_activity_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -24,7 +22,7 @@
             android:layout_marginEnd="88dp"
             android:textColor="@color/colorMainText"
             android:textSize="24sp"
-            android:text="@string/default_title_movie" />
+            android:text="@string/information" />
 
         <TextView
             android:id="@+id/movie_overview_activity_item"
@@ -124,12 +122,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:text="@string/add_to_favorites" />
 
         <LinearLayout
             android:layout_width="match_parent"

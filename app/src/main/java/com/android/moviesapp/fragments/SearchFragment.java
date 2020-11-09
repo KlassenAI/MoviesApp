@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -18,11 +17,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.moviesapp.App;
 import com.android.moviesapp.R;
-import com.android.moviesapp.activities.MainActivity;
 import com.android.moviesapp.adapters.MovieListItemAdapter;
 import com.android.moviesapp.db.AppDatabase;
 import com.android.moviesapp.entity.Movie;
@@ -50,12 +47,12 @@ import static android.app.Activity.RESULT_OK;
  */
 public class SearchFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
     private MovieListItemAdapter mMovieListItemAdapter;
-    private List<ItemMovie> mItemMovieList;
-    private List<Movie> mMovieListFromDB;
+    private List<ItemMovie> mItemMovieList = new ArrayList<>();
     private RequestQueue mRequestQueue;
+
     private AppDatabase mAppDatabase = App.getAppDatabase();
+    private List<Movie> mMovieList = new ArrayList<>();
 
     public SearchFragment() {
     }
@@ -79,24 +76,21 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
-        mRecyclerView = rootView.findViewById(R.id.search_movies_recycler_view);
+        RecyclerView recyclerView = rootView.findViewById(R.id.search_movies_recycler_view);
 
-        if (mItemMovieList == null) mItemMovieList = new ArrayList<>();
-
-        mMovieListFromDB = new ArrayList<>();
         new GettingAllFavoritesMovies().execute();
 
         mMovieListItemAdapter = new MovieListItemAdapter(getActivity(), mItemMovieList, mAppDatabase,
                 MovieListItemAdapter.MovieListItemType.SEARCH, SearchFragment.this);
-        mRecyclerView.setAdapter(mMovieListItemAdapter);
+        recyclerView.setAdapter(mMovieListItemAdapter);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(mLayoutManager);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider));
 
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         mRequestQueue = Volley.newRequestQueue(getActivity());
 
@@ -109,7 +103,7 @@ public class SearchFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
         MenuItem item = menu.findItem(R.id.app_bar_search);
-        SearchView searchView = (SearchView) item.getActionView();
+        final SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -122,15 +116,6 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
-    }
-
-    private class GettingAllFavoritesMovies extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            mMovieListFromDB = mAppDatabase.getWordDao().getAllFavoritesMovies();
-            return null;
-        }
     }
 
     private void getMovies(final String request) {
@@ -167,7 +152,7 @@ public class SearchFragment extends Fragment {
                         String popularity = jsonObject.getString(Util.JSON_OBJECT_MOVIE_POPULARITY);
                         Movie movie = new Movie(id, title, image, date, rating, adult, genresIds, overview, votes, popularity);
 
-                        if (mMovieListFromDB.contains(movie)) {
+                        if (mMovieList.contains(movie)) {
                             mItemMovieList.add(new ItemMovie(movie, true));
                         } else {
                             mItemMovieList.add(new ItemMovie(movie, false));
@@ -188,5 +173,24 @@ public class SearchFragment extends Fragment {
         });
 
         mRequestQueue.add(jsonObjectRequest);
+    }
+
+    private class GettingAllFavoritesMovies extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mMovieList = mAppDatabase.getWordDao().getAllFavoritesMovies();
+            if (mItemMovieList != null) {
+                for (int i = 0; i < mItemMovieList.size(); i++) {
+                    if (mMovieList.contains(mItemMovieList.get(i).getMovie())) {
+                        mItemMovieList.get(i).setFavorite(true);
+                    } else {
+                        mItemMovieList.get(i).setFavorite(false);
+                    }
+                }
+            }
+            return null;
+        }
+
     }
 }

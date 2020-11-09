@@ -30,13 +30,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HomeFragment extends Fragment {
 
     private RecyclerView mCurrentPopularMoviesRecyclerView;
@@ -51,9 +51,11 @@ public class HomeFragment extends Fragment {
     private MovieCardItemAdapter mTopRatedMoviesAdapter;
     private List<ItemMovie> mTopRatedMoviesList;
 
-
     private AppDatabase mAppDatabase = App.getAppDatabase();
     private List<Movie> mMovieList = new ArrayList<>();
+
+    private Calendar mTodayCalendar;
+    private String mTodayDate;
 
     private RequestQueue mRequestQueue;
 
@@ -75,6 +77,10 @@ public class HomeFragment extends Fragment {
 
         new GettingAllFavoritesMovies().execute();
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        mTodayCalendar = new GregorianCalendar();
+        mTodayDate = dateFormat.format(mTodayCalendar.getTime());
+
         mRequestQueue = Volley.newRequestQueue(getActivity());
 
         if (mCurrentPopularMoviesList == null) {
@@ -88,7 +94,7 @@ public class HomeFragment extends Fragment {
 
         if (mUpcomingMoviesList == null) {
             mUpcomingMoviesList = new ArrayList<>();
-            getMovies(Util.REQUEST_UPCOMING_MOVIES, MovieType.UPCOMING);
+            getMovies(Util.REQUEST_UPCOMING_MOVIES + mTodayDate, MovieType.UPCOMING);
         }
         mUpcomingMoviesAdapter = new MovieCardItemAdapter(getActivity(), mUpcomingMoviesList, mAppDatabase, HomeFragment.this);
         mUpcomingMoviesRecyclerView.setAdapter(mUpcomingMoviesAdapter);
@@ -130,8 +136,8 @@ public class HomeFragment extends Fragment {
 
                         String id = jsonObject.getString(Util.JSON_OBJECT_MOVIE_ID);
                         String title = jsonObject.getString(Util.JSON_OBJECT_MOVIE_TITLE);
-                        String image = jsonObject.getString(Util.JSON_OBJECT_MOVIE_POSTER);
                         String date = jsonObject.getString(Util.JSON_OBJECT_MOVIE_DATE);
+                        String image = jsonObject.getString(Util.JSON_OBJECT_MOVIE_POSTER);
                         String rating = jsonObject.getString(Util.JSON_OBJECT_MOVIE_RATING);
                         boolean adult = jsonObject.getBoolean(Util.JSON_OBJECT_MOVIE_ADULT);
 
@@ -205,7 +211,35 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            mMovieList.clear();
             mMovieList = mAppDatabase.getWordDao().getAllFavoritesMovies();
+            if (mCurrentPopularMoviesList != null) {
+                for (int i = 0; i < mCurrentPopularMoviesList.size(); i++) {
+                    if (mMovieList.contains(mCurrentPopularMoviesList.get(i).getMovie())) {
+                        mCurrentPopularMoviesList.get(i).setFavorite(true);
+                    } else {
+                        mCurrentPopularMoviesList.get(i).setFavorite(false);
+                    }
+                }
+            }
+            if (mUpcomingMoviesList != null) {
+                for (int i = 0; i < mUpcomingMoviesList.size(); i++) {
+                    if (mMovieList.contains(mUpcomingMoviesList.get(i).getMovie())) {
+                        mUpcomingMoviesList.get(i).setFavorite(true);
+                    } else {
+                        mUpcomingMoviesList.get(i).setFavorite(false);
+                    }
+                }
+            }
+            if (mTopRatedMoviesList != null) {
+                for (int i = 0; i < mTopRatedMoviesList.size(); i++) {
+                    if (mMovieList.contains(mTopRatedMoviesList.get(i).getMovie())) {
+                        mTopRatedMoviesList.get(i).setFavorite(true);
+                    } else {
+                        mTopRatedMoviesList.get(i).setFavorite(false);
+                    }
+                }
+            }
             return null;
         }
     }

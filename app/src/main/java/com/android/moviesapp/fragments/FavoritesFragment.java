@@ -34,12 +34,11 @@ import static android.app.Activity.RESULT_OK;
  */
 public class FavoritesFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
     private MovieListItemAdapter mItemMovieListAdapter;
-    private List<ItemMovie> mItemMovieList;
-    private List<Movie> mMovieList;
+    private List<ItemMovie> mItemMovieList = new ArrayList<>();
 
     private AppDatabase mMovieAppDatabase = App.getAppDatabase();
+    private List<Movie> mMovieList = new ArrayList<>();
 
     public FavoritesFragment() {
     }
@@ -53,26 +52,20 @@ public class FavoritesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
-        mRecyclerView = rootView.findViewById(R.id.favorites_movies_recycler_view);
+        RecyclerView recyclerView = rootView.findViewById(R.id.favorites_movies_recycler_view);
 
-        if (mItemMovieList == null) {
-            mItemMovieList = new ArrayList<>();
-        }
-        mMovieList = new ArrayList<>();
         new GetAllWordsAsyncTask().execute();
+
         mItemMovieListAdapter = new MovieListItemAdapter(getActivity(), mItemMovieList, mMovieAppDatabase,
                 MovieListItemAdapter.MovieListItemType.FAVORITE, FavoritesFragment.this);
-        mRecyclerView.setAdapter(mItemMovieListAdapter);
+        recyclerView.setAdapter(mItemMovieListAdapter);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(mLayoutManager);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recycler_view_divider));
-
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-        setHasOptionsMenu(true);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         return rootView;
     }
@@ -99,12 +92,6 @@ public class FavoritesFragment extends Fragment {
                 mItemMovieList.add(new ItemMovie(mMovieList.get(i), true));
             }
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            mItemMovieListAdapter.notifyDataSetChanged();
         }
     }
 }

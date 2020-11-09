@@ -28,6 +28,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MovieActivity extends AppCompatActivity {
@@ -57,10 +59,9 @@ public class MovieActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setTitle("");
+
 
         mPosterImageView = findViewById(R.id.movie_poster_activity_item);
-        mTitleTextView = findViewById(R.id.movie_title_activity_item);
         mOverviewTextView = findViewById(R.id.movie_overview_activity_item);
         mGenresRecyclerView = findViewById(R.id.movie_genres_activity_item);
         mRatingTextView = findViewById(R.id.movie_rating_activity_item);
@@ -74,9 +75,8 @@ public class MovieActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         position = intent.getIntExtra("Index", 0);
-        Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
         mItemMovie = intent.getParcelableExtra("ItemMovie");
-        mTitleTextView.setText(mItemMovie.getTitle());
+        setTitle(mItemMovie.getTitle());
         if (mItemMovie.getPoster() == null) {
             mPosterImageView.setImageResource(R.drawable.no_image);
         } else {

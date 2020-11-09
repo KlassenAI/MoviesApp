@@ -23,6 +23,7 @@ import com.android.moviesapp.utils.Util;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MovieCardItemAdapter extends RecyclerView.Adapter<MovieCardItemAdapter.MovieCardItemViewHolder> {
 
@@ -75,6 +76,7 @@ public class MovieCardItemAdapter extends RecyclerView.Adapter<MovieCardItemAdap
         String rating = currentItemMovie.getRating();
         final boolean favorite = currentItemMovie.isFavorite();
 
+        holder.mIndexTextView.setText(String.format(Locale.getDefault(), "#%d", position + 1));
         if (posterUrl == null) {
             holder.mPosterImageView.setImageResource(R.drawable.no_image);
         } else {
